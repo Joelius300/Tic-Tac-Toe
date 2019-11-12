@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using TicTacToe.Properties;
 
 namespace TicTacToe
 {
@@ -24,7 +25,7 @@ namespace TicTacToe
 
         protected virtual void OnWin(bool winner, int moveCount)
         {
-            MessageBox.Show($"{GetName(winner)} has won.{Environment.NewLine}The match lasted for {moveCount} moves.", Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"{GetName(winner)} have won.{Environment.NewLine}The match lasted for {moveCount} moves.", Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         protected virtual void OnDraw()
@@ -58,7 +59,9 @@ namespace TicTacToe
                     {
                         Dock = DockStyle.Fill,
                         Tag = new Point(row, col),
-                        BackColor = Color.Black
+                        BackColor = Color.LightGray,
+                        BackgroundImageLayout = ImageLayout.Zoom,
+                        Margin = new Padding(4)
                     };
 
                     cell.Click += CellClick;
@@ -70,7 +73,7 @@ namespace TicTacToe
             Controls.Add(table);
 
             int formWidth = Math.Min(CellWidth * width, MaxWidth);
-            Size = new Size(formWidth, formWidth);
+            ClientSize = new Size(formWidth, formWidth);
         }
 
         private void CellClick(object sender, EventArgs e)
@@ -81,7 +84,7 @@ namespace TicTacToe
             try
             {
                 MoveResult result = _game.SetMark(pos.X, pos.Y);
-                cell.BackColor = GetColor(result.MarkedPlayer);
+                cell.BackgroundImage = GetImage(result.MarkedPlayer);
 
                 if (result.GameEnded)
                 {
@@ -101,7 +104,7 @@ namespace TicTacToe
             }
         }
 
-        private Color GetColor(bool player) => player ? Color.Green : Color.Red;
-        private string GetName(bool player) => player ? "Green" : "Red";
+        private Image GetImage(bool player) => player ? Resources.O : Resources.X;
+        private string GetName(bool player) => player ? "Circles" : "Crosses";
     }
 }
