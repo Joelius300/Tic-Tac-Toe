@@ -56,16 +56,32 @@ namespace TicTacToe
             return result;
         }
 
+        public bool? this[int x, int y]
+        {
+            get
+            {
+                CheckCoordinateRange(x, y);
+                return _field[x, y];
+            }
+        }
+
+        public bool? GetCell(int x, int y) => this[x, y];
+
         private void CheckInput(int x, int y)
+        {
+            CheckCoordinateRange(x, y);
+
+            if (_field[x, y].HasValue)
+                throw new InvalidOperationException($"The cell at {x}, {y} already has a value.");
+        }
+
+        private void CheckCoordinateRange(int x, int y)
         {
             if (x < 0 || x > _width - 1)
                 throw new ArgumentOutOfRangeException(nameof(x), $"The x coordinate has to be on the field. Valid values go from 0 to {_width - 1}.");
 
             if (y < 0 || y > _width - 1)
                 throw new ArgumentOutOfRangeException(nameof(y), $"The y coordinate has to be on the field. Valid values go from 0 to {_width - 1}.");
-
-            if (_field[x, y].HasValue)
-                throw new InvalidOperationException($"The cell at {x}, {y} already has a value.");
         }
 
         private bool CheckGameWon(int x, int y, bool played)
