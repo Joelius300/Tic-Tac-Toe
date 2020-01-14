@@ -8,7 +8,7 @@ namespace TicTacToe
     public partial class TicTacToeView : Form
     {
         private const int SquareAmount = 3;
-        private const int CellWidth = 125;
+        private const int CellWidth = 200;
         private const int MaxWidth = 1000;
         private const string Title = "Tic-tac-toe";
 
@@ -106,5 +106,13 @@ namespace TicTacToe
 
         private Image GetImage(bool player) => player ? Resources.O : Resources.X;
         private string GetName(bool player) => player ? "Circles" : "Crosses";
+
+        private void TicTacToeView_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                Size = new Size(Width, Width);
+            }
+        }
     }
 }
