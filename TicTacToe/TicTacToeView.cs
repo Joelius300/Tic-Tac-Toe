@@ -40,7 +40,9 @@ namespace TicTacToe
                 Dock = DockStyle.Fill,
                 ColumnCount = width,
                 RowCount = width,
-                TabIndex = 0
+                TabIndex = 0,
+                Padding = new Padding(3),
+                Margin = new Padding(3)
             };
 
             float sqWidth = 100f / width;
@@ -111,7 +113,8 @@ namespace TicTacToe
         {
             if (WindowState == FormWindowState.Normal)
             {
-                Size = new Size(Width, Width);
+                int width = ClientSize.Width;
+                ClientSize = new Size(width, width);
             }
         }
     }
